@@ -1,0 +1,32 @@
+<h1>제목</h1>
+{{ blog_detail.title }}
+<br><br>
+
+<h2>날짜</h2>
+{{ blog_detail.date }}
+<br><br>
+
+<h3>본문</h3>
+{{ blog_detail.body }}
+<br><br>
+
+<h3>첨부파일</h3>
+<!-- photo 데이터가 존재한다면 -->
+{% if blog_detail.photo %}  
+    <img src="{{ blog_detail.photo.url }}" alt="" height="300px">
+{% endif %}
+<br>
+
+<hr>
+<h3>댓글</h3>
+<form method="POST" action="{% url 'create_comment' blog_detail.id %}">
+    {% csrf_token %}
+    <table>{{ comment_form.as_table }}</table>
+    <input type="submit">
+</form>
+<br><hr>
+
+{% for comment in blog_detail.comment_set.all %}
+    <p>{{ comment }} - ( {{ comment.date }} )</p>
+    <hr>
+{% endfor %}

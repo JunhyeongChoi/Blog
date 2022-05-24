@@ -1,0 +1,27 @@
+{% if user.is_authenticated %}
+안녕하세요. {{ user.username }}님
+<h2><a href="{% url 'logout' %}">로그아웃</a></h2>
+
+{% else %}
+아직 로그인 되지 않았습니다.
+<h2><a href="{% url 'login' %}">로그인</a></h2>
+
+{% endif %}
+
+<h1>My Simple Blog</h1>
+<hr>
+<br>
+
+{% for post in posts %}
+
+    <a href="{% url 'detail' post.id %}"><h3>{{ post.title }}</h3></a>
+    <h3>{{ post.date }}</h3>
+    <hr>
+    <br>
+
+{% endfor %}
+
+
+{% if user.is_authenticated %}
+<a href="{% url 'modelformcreate' %}">새 글 작성</a><br>
+{% endif %}
